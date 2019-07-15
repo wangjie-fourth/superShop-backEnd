@@ -1,0 +1,39 @@
+spring:
+  #数据库信息
+  datasource:
+    #驱动信息
+    driver-class-name: com.mysql.jdbc.Driver
+    #数据库地址
+    url: jdbc:mysql://127.0.0.1/supershop?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+  jpa:
+    show-sql: true
+  jackson:
+    # 表示与前端交互时，为null的属性，不传输
+    default-property-inclusion: non_null
+#
+# 服务器部分
+server:
+  # 项目访问前缀
+  context-path: /supershop
+
+# 微信配置文件
+wechat:
+  mpAppId: wx8d58cd4a82ae026e
+  mpAppSecret: ebcd2d6bac97ad7840689d9d7da8de05
+  # 商户号
+  mchId: 1526969301
+  # 商户密钥
+  mchKey: Wj18856435267Wj884277998Wj123456
+  # 商户证书路径
+  KeyPath: F:\wechatPayTools\WXCertUtil\cert\1526969301_20190308_cert\apiclient_cert.p12
+  # 微信支付异步通知地址
+  notifyUrl: http://wangjie.natappvip.cc/supershop/pay/notify
+
+# 图片映射问题
+fileImages:
+  readPath: /getImages/**
+  writePath: F:/images/
+
+
