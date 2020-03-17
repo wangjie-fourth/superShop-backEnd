@@ -8,9 +8,8 @@ import lombok.Getter;
  */
 @Getter
 public enum LocationExistStatusEnum {
-    EXIST(1,"存在"),
-    DELETED(0,"已删除")
-    ;
+    EXIST(1, "存在"),
+    DELETED(0, "已删除");
     private Integer code;
     private String message;
 

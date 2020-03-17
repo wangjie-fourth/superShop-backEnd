@@ -31,10 +31,10 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     /*
-    * 查看该user_id 下是否有默认收货地址
-    *       如果有，修改该条信息为非默认收货地址
-    *       如果没有，不做任何操作
-    * */
+     * 查看该user_id 下是否有默认收货地址
+     *       如果有，修改该条信息为非默认收货地址
+     *       如果没有，不做任何操作
+     * */
     public void updateLocationSelectedByUserId(String userId) {
         // 查询对应user_id 和 location_selected为默认收货地址 的对象
         List<Location> locationList = respository.findByUserIdAndAndLocationSelected(userId, LocationSelectedStatusEnum.SELECTED.getCode());
@@ -49,7 +49,7 @@ public class LocationServiceImpl implements LocationService {
     @Override
     // 获取一个用户下，所有存在的收货地址信息
     public List<Location> getAllByUserIdAndLocationExist(String userId) {
-        return respository.findAllByUserIdAndAndLocationExist(userId,LocationExistStatusEnum.EXIST.getCode());
+        return respository.findAllByUserIdAndAndLocationExist(userId, LocationExistStatusEnum.EXIST.getCode());
     }
 
     @Override
@@ -80,7 +80,7 @@ public class LocationServiceImpl implements LocationService {
     public List<Location> getLocationSelectesByUserId(String userId) {
         //
         return respository.findAllByUserIdAndAndLocationExistAndLocationSelected(userId,
-                        LocationExistStatusEnum.EXIST.getCode(),
+                LocationExistStatusEnum.EXIST.getCode(),
                 LocationSelectedStatusEnum.SELECTED.getCode());
     }
 }

@@ -10,11 +10,12 @@ import java.util.List;
 public interface LocationService {
     // 添加新的收货地址信息
     Location addLocation(Location location);
+
     /*
-    * 查看该user_id 下是否有默认收货地址
-    *       如果有，修改该条信息为非默认收货地址
-    *       如果没有，不做任何操作
-    * */
+     * 查看该user_id 下是否有默认收货地址
+     *       如果有，修改该条信息为非默认收货地址
+     *       如果没有，不做任何操作
+     * */
     void updateLocationSelectedByUserId(String userId);
 
     // 获取一个用户下，所有存在的收货地址信息

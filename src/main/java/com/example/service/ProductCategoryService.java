@@ -1,7 +1,6 @@
 package com.example.service;
 
 import com.example.domain.dataobject.ProductCategory;
-import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -10,7 +9,7 @@ import java.util.List;
  */
 public interface ProductCategoryService {
 
-    /** 获取所有分类数据，用于商品左侧导航栏 */
+    // 获取所有分类数据，用于商品左侧导航栏
     List<ProductCategory> getProductCategoryByCategoryExist(Integer categoryExist);
 
     // 得到类目表的所有数据

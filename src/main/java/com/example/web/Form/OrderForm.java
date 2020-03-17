@@ -1,11 +1,8 @@
 package com.example.web.Form;
 
-import com.example.domain.dataobject.OrderDetail;
 import lombok.Data;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * 订单表单信息

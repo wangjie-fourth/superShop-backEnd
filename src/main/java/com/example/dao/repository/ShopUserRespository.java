@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by wangjie_fourth on 2019/4/26.
  */
-public interface ShopUserRespository extends JpaRepository<ShopUser,String> {
+public interface ShopUserRespository extends JpaRepository<ShopUser, String> {
 
     // 添加新的用户
     ShopUser save(ShopUser shopUser);

@@ -5,7 +5,6 @@ import com.example.service.ShopUserService;
 import com.example.web.VO.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,8 +23,8 @@ public class UserController {
 
     @GetMapping("/getUserInfo")
     public ResultVO<List<ShopUser>> getUserByOpenId(
-            @RequestParam("openId")String openId
-    ){
+            @RequestParam("openId") String openId
+    ) {
         log.info("获取用户信息");
         //
         ShopUser shopUser = userService.findByOpenId(openId);

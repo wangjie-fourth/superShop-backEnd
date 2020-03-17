@@ -35,12 +35,12 @@ public class GoodsController {
 
     // 获取商品列表左侧分类数据
     @GetMapping("/getCategorys")
-    public ResultVO<List<ProductCategoryVO>> getProductCategoryList(){
+    public ResultVO<List<ProductCategoryVO>> getProductCategoryList() {
         // 获取在架的商品分类
         List<ProductCategory> lists = productCategoryServiceImpl.getProductCategoryByCategoryExist(ProductCategoryStatusEnum.UP.getCode());
         // 转换成前端所需要的数据
         List<ProductCategoryVO> resultData = new ArrayList<>();
-        for (ProductCategory p: lists) {
+        for (ProductCategory p : lists) {
             ProductCategoryVO vo = new ProductCategoryVO();
             vo.setCategoryId(p.getCategoryId());
             vo.setCategoryName(p.getCategoryName());
@@ -62,23 +62,23 @@ public class GoodsController {
     public ResultVO<ProductsVO> getProductsByCategoryType(
             @RequestParam(value = "type", defaultValue = "0") Integer type,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "size", defaultValue = "6") Integer size){
+            @RequestParam(value = "size", defaultValue = "6") Integer size) {
         /*
-        * 1、获取指定页面下的商品数据
-        * 2、转换成前端所需数据
-        *       对商品信息进行转换
-        *       判断该分类下是否还有数据
-        * 3、发送到前端
-        * */
+         * 1、获取指定页面下的商品数据
+         * 2、转换成前端所需数据
+         *       对商品信息进行转换
+         *       判断该分类下是否还有数据
+         * 3、发送到前端
+         * */
 
         // 1、根据编号获取商品
-        PageRequest pageRequest = new PageRequest(page,size);
+        PageRequest pageRequest = new PageRequest(page, size);
         Page<Product> productPage = productService.getProductsByCategoryAndStatus(pageRequest, type, ProductStatusEnum.UP.getCode());
         List<Product> productList = productPage.getContent();
 
         // 2.1 转换成前端所需的商品数据
         List<ProductVO> productVOList = new ArrayList<>();
-        for (Product p: productList) {
+        for (Product p : productList) {
             ProductVO vo = new ProductVO();
 
             vo.setProductId(p.getProductId());
@@ -92,7 +92,7 @@ public class GoodsController {
         }
         // 2.2 判断是否还有数据
         Integer exist = 0;
-        if (productPage.getTotalPages() >= page){
+        if (productPage.getTotalPages() >= page) {
             // 后续没有数据
             exist = 0;
         } else {
@@ -116,8 +116,8 @@ public class GoodsController {
     // 根据商品id，获取该商品的详细信息
     @GetMapping("/getProductById")
     public ResultVO<ProductVO> getProducyById(
-            @RequestParam(value = "id",defaultValue = "1")String id
-    ){
+            @RequestParam(value = "id", defaultValue = "1") String id
+    ) {
         //获取信息
         ProductInfoDTO p = productService.getProductById(id);
         // 转换成前端所需要的格式

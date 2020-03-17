@@ -13,10 +13,8 @@ import com.example.web.VO.orderInfo.OrderInfoVO;
 import com.example.web.VO.orderInfo.OrderVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,13 +38,13 @@ public class OrderController {
     // 购物车端下订单
     public ResultVO<OrderDTO> createNewOrders(
             OrderForm orderForm
-            ){
-        log.info("{}",orderForm);
+    ) {
+        log.info("{}", orderForm);
         /*
-        * 1、将Form数据转换为DTO数据
-        * 2、交给service层处理
-        * 3、修改购物车状态
-        * */
+         * 1、将Form数据转换为DTO数据
+         * 2、交给service层处理
+         * 3、修改购物车状态
+         * */
         List<Carshop> carshopList = new ArrayList<>();
         OrderDTO orderDTO = new OrderDTO();
         // 1.1将list字符串转换为数组
@@ -54,7 +52,7 @@ public class OrderController {
 
         // 1.2 OrderDetailForm 转换为 OrderDetail
         List<OrderDetail> orderDetailList = new ArrayList<>();
-        for (OrderDetailForm form: list){
+        for (OrderDetailForm form : list) {
             OrderDetail p = new OrderDetail();
 
             p.setProductId(form.getProductId());
@@ -82,13 +80,13 @@ public class OrderController {
         orderDTO.setOrderAmount(new BigDecimal(0.01));
         orderDTO.setOrderDetailList(orderDetailList);
 
-        log.info("{}",orderDTO);
+        log.info("{}", orderDTO);
 
         // 2、
         OrderDTO saveOrder = orderService.saveOrder(orderDTO);
 
         // 3、修改购物车状态
-        carshopService.updateAfterNewOrders(orderForm.getUserId(),carshopList);
+        carshopService.updateAfterNewOrders(orderForm.getUserId(), carshopList);
 
         // 4、
         ResultVO<OrderDTO> resultVO = new ResultVO<>();
@@ -103,19 +101,19 @@ public class OrderController {
     // 从单个商品端下单
     public ResultVO<OrderDTO> createNewOrder(
             OrderForm orderForm
-    ){
-        log.info("{}",orderForm);
+    ) {
+        log.info("{}", orderForm);
         /*
-        * 1、将Form数据转换为DTO数据
-        * 2、交给service层处理
-        * */
+         * 1、将Form数据转换为DTO数据
+         * 2、交给service层处理
+         * */
         OrderDTO orderDTO = new OrderDTO();
         // 1.1将list字符串转换为数组
         List<OrderDetailForm> list = JsonUtil.jsonListToList(orderForm.getOrderDeatils());
 
         // 1.2 OrderDetailForm 转换为 OrderDetail
         List<OrderDetail> orderDetailList = new ArrayList<>();
-        for (OrderDetailForm form: list){
+        for (OrderDetailForm form : list) {
             OrderDetail p = new OrderDetail();
 
             p.setProductId(form.getProductId());
@@ -136,7 +134,7 @@ public class OrderController {
         orderDTO.setOrderAmount(new BigDecimal(0.01));
         orderDTO.setOrderDetailList(orderDetailList);
 
-        log.info("{}",orderDTO);
+        log.info("{}", orderDTO);
 
         // 2、
         OrderDTO saveOrder = orderService.saveOrder(orderDTO);
@@ -152,15 +150,15 @@ public class OrderController {
 
     @GetMapping("/getAllOrders")
     public ResultVO<List<OrderVO>> getAllOrders(
-            @RequestParam("userId")String userId
-    ){
+            @RequestParam("userId") String userId
+    ) {
         //1、获取userId下的所有订单信息
         List<OrderDTO> orderDTOList = orderService.getAllOrderDTOByUserId(userId);
 
         //2、转换数据
         List<OrderVO> data = new ArrayList<>();
 
-        for (OrderDTO orderDTO : orderDTOList){
+        for (OrderDTO orderDTO : orderDTOList) {
             OrderVO orderVO = new OrderVO();
 
             orderVO.setOrderId(orderDTO.getOrderId());
@@ -170,7 +168,7 @@ public class OrderController {
             orderVO.setPayStatus(orderDTO.getPayStatus());
 
             List<OrderInfoVO> list = new ArrayList<>();
-            for (OrderDetail orderDetail : orderDTO.getOrderDetailList()){
+            for (OrderDetail orderDetail : orderDTO.getOrderDetailList()) {
                 OrderInfoVO orderInfoVO = new OrderInfoVO();
 
                 orderInfoVO.setProductName(orderDetail.getProductName());
@@ -197,15 +195,15 @@ public class OrderController {
     // 获取用户未完结的所有订单
     @GetMapping("/getAllUnfinishedOrders")
     public ResultVO<List<OrderVO>> getAllUnfinishedOrders(
-            @RequestParam("userId")String userId
-    ){
+            @RequestParam("userId") String userId
+    ) {
         // 1、获取用户下所有未完结订单
         List<OrderDTO> orderDTOList = orderService.getAllUnfinishedOrdersByUserId(userId);
 
         //2、转换数据
         List<OrderVO> data = new ArrayList<>();
 
-        for (OrderDTO orderDTO : orderDTOList){
+        for (OrderDTO orderDTO : orderDTOList) {
             OrderVO orderVO = new OrderVO();
 
             orderVO.setOrderId(orderDTO.getOrderId());
@@ -215,7 +213,7 @@ public class OrderController {
             orderVO.setPayStatus(orderDTO.getPayStatus());
 
             List<OrderInfoVO> list = new ArrayList<>();
-            for (OrderDetail orderDetail : orderDTO.getOrderDetailList()){
+            for (OrderDetail orderDetail : orderDTO.getOrderDetailList()) {
                 OrderInfoVO orderInfoVO = new OrderInfoVO();
 
                 orderInfoVO.setProductName(orderDetail.getProductName());
@@ -231,7 +229,6 @@ public class OrderController {
         }
 
 
-
         //
         ResultVO<List<OrderVO>> resultVO = new ResultVO<>();
         resultVO.setCode(0);
@@ -244,15 +241,15 @@ public class OrderController {
     // 获取用户所有完结状态的订单
     @GetMapping("/getAllFinishedOrders")
     public ResultVO<List<OrderVO>> getAllFinishedOrders(
-            @RequestParam("userId")String userId
-    ){
+            @RequestParam("userId") String userId
+    ) {
         // 1、获取用户所有完结状态的订单
         List<OrderDTO> orderDTOList = orderService.getAllFinishedOrdersByUserId(userId);
 
         //2、转换数据
         List<OrderVO> data = new ArrayList<>();
 
-        for (OrderDTO orderDTO : orderDTOList){
+        for (OrderDTO orderDTO : orderDTOList) {
             OrderVO orderVO = new OrderVO();
 
             orderVO.setOrderId(orderDTO.getOrderId());
@@ -262,7 +259,7 @@ public class OrderController {
             orderVO.setPayStatus(orderDTO.getPayStatus());
 
             List<OrderInfoVO> list = new ArrayList<>();
-            for (OrderDetail orderDetail : orderDTO.getOrderDetailList()){
+            for (OrderDetail orderDetail : orderDTO.getOrderDetailList()) {
                 OrderInfoVO orderInfoVO = new OrderInfoVO();
 
                 orderInfoVO.setProductName(orderDetail.getProductName());

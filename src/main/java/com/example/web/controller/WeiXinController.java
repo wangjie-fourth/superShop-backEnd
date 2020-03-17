@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class WeiXinController {
 
     @GetMapping("/auth")
-    public void auth(@RequestParam("code") String code){
+    public void auth(@RequestParam("code") String code) {
         log.info("进入auth方法。。。");
-        log.info("code={}",code);
+        log.info("code={}", code);
     }
 }

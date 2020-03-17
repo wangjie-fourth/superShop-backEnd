@@ -20,7 +20,7 @@ import java.util.List;
  * Created by wangjie_fourth on 2019/4/15.
  */
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRespository respository;
 
@@ -30,7 +30,7 @@ public class ProductServiceImpl implements ProductService{
     @Override
     // 根据商品分类和是否在架获取商品信息
     public Page<Product> getProductsByCategoryAndStatus(PageRequest page, Integer categoryType, Integer productStatus) {
-        return respository.findByCategoryTypeAndProductStatus(page,categoryType,productStatus);
+        return respository.findByCategoryTypeAndProductStatus(page, categoryType, productStatus);
     }
 
     @Override

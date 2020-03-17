@@ -2,7 +2,6 @@ package com.example.dao.repository;
 
 import com.example.domain.dataobject.Carshop;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public interface CarshopRespository extends JpaRepository<Carshop, String> {
     Carshop save(Carshop carshop);
 
     // 获取用户购物车中某个商品的数据
-    Carshop findByUserIdAndProductId(String userId,String productId);
+    Carshop findByUserIdAndProductId(String userId, String productId);
 
     // 根据id信息，删除数据
     void delete(Carshop carshop);

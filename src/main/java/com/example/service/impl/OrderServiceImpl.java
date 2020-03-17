@@ -15,7 +15,6 @@ import com.example.service.OrderService;
 import com.example.service.PayService;
 import com.example.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,10 +49,10 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public OrderDTO saveOrder(OrderDTO orderDTO) {
         /*
-        * 1、将 orderDTO 分解成 orderMaster和orderDetail
-        * 2、分别添加到数据库中
-        * 3、扣除商品库存
-        * */
+         * 1、将 orderDTO 分解成 orderMaster和orderDetail
+         * 2、分别添加到数据库中
+         * 3、扣除商品库存
+         * */
         String orderId = KeyUtil.getUniqueKey();
         orderDTO.setOrderId(orderId);
         orderDTO.setPayStatus(PayStatusEnum.WAIT.getCode());
@@ -72,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
 
         // 1.2
         List<OrderDetail> detailList = orderDTO.getOrderDetailList();
-        for (OrderDetail p: detailList) {
+        for (OrderDetail p : detailList) {
             p.setDetailId(KeyUtil.getUniqueKey());
             p.setOrderId(orderId);
             // 2.2
@@ -86,14 +85,13 @@ public class OrderServiceImpl implements OrderService {
         }
 
 
-
         return orderDTO;
     }
 
     @Override
     /* 分页获取，支付状态为未支付 的 主订单信息 */
     public Page<OrderMaster> getNoPayStatusOfOrderMaster(Pageable pageable) {
-        return orderMasterRespository.findAllByPayStatus(pageable,PayStatusEnum.WAIT.getCode());
+        return orderMasterRespository.findAllByPayStatus(pageable, PayStatusEnum.WAIT.getCode());
     }
 
     @Override
@@ -162,7 +160,7 @@ public class OrderServiceImpl implements OrderService {
         // TODO
 
         // 判断订单是否支付，如果支付，就退款
-        if (orderDTO.getPayStatus().equals(PayStatusEnum.SUCCESS.getCode())){
+        if (orderDTO.getPayStatus().equals(PayStatusEnum.SUCCESS.getCode())) {
             payService.refund(orderDTO);
         }
         return orderDTO;
@@ -184,16 +182,16 @@ public class OrderServiceImpl implements OrderService {
     /* 获取所有的订单信息 */
     public List<OrderDTO> getAllOrderDTOByUserId(String userId) {
         /*
-        * 1、获取userId下所有的OrderMaster对象
-        * 2、遍历所有的OrderMaster对象，分别获取其所有的OrderDetail对象；并将其封装称OrderDTO对象
-        * */
+         * 1、获取userId下所有的OrderMaster对象
+         * 2、遍历所有的OrderMaster对象，分别获取其所有的OrderDetail对象；并将其封装称OrderDTO对象
+         * */
         List<OrderDTO> result = new ArrayList<>();
         ShopUser shopUser = shopUserRespository.findByUserId(userId);
 
         // 1、
         List<OrderMaster> orderMasterList = orderMasterRespository.findAllByUserId(userId);
         // 2、
-        for(OrderMaster orderMaster : orderMasterList){
+        for (OrderMaster orderMaster : orderMasterList) {
             OrderDTO orderDTO = new OrderDTO();
 
             List<OrderDetail> orderDetailList = orderDetailRespository.findAllByOrderId(orderMaster.getOrderId());
@@ -219,9 +217,9 @@ public class OrderServiceImpl implements OrderService {
     // 获取用户下所有未完结订单
     public List<OrderDTO> getAllUnfinishedOrdersByUserId(String userId) {
         /*
-        * 1、获取userId下所有状态未完结的OrderMaster对象
-        * 2、遍历所有的OrderMaster对象，分别获取其所有的OrderDetail对象；并将其封装称OrderDTO对象
-        * */
+         * 1、获取userId下所有状态未完结的OrderMaster对象
+         * 2、遍历所有的OrderMaster对象，分别获取其所有的OrderDetail对象；并将其封装称OrderDTO对象
+         * */
         List<OrderDTO> result = new ArrayList<>();
         ShopUser shopUser = shopUserRespository.findByUserId(userId);
 
@@ -229,7 +227,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrderMaster> orderMasterList = orderMasterRespository.findAllByUserIdAndOrderStatus(userId, OrderStatusEnum.NEW.getCode());
 
         // 2、
-        for(OrderMaster orderMaster : orderMasterList){
+        for (OrderMaster orderMaster : orderMasterList) {
             OrderDTO orderDTO = new OrderDTO();
 
             List<OrderDetail> orderDetailList = orderDetailRespository.findAllByOrderId(orderMaster.getOrderId());
@@ -255,9 +253,9 @@ public class OrderServiceImpl implements OrderService {
     // 获取用户所有完结状态的订单
     public List<OrderDTO> getAllFinishedOrdersByUserId(String userId) {
         /*
-        * 1、获取userId下所有已完结状态的OrderMaster对象
-        * 2、遍历所有的OrderMaster对象，分别获取其所有的OrderDetail对象；并将其封装称OrderDTO对象
-        * */
+         * 1、获取userId下所有已完结状态的OrderMaster对象
+         * 2、遍历所有的OrderMaster对象，分别获取其所有的OrderDetail对象；并将其封装称OrderDTO对象
+         * */
         List<OrderDTO> result = new ArrayList<>();
         ShopUser shopUser = shopUserRespository.findByUserId(userId);
 
@@ -269,7 +267,7 @@ public class OrderServiceImpl implements OrderService {
         orderMasterList.addAll(orderMasterList2);
 
         // 2、
-        for(OrderMaster orderMaster : orderMasterList){
+        for (OrderMaster orderMaster : orderMasterList) {
             OrderDTO orderDTO = new OrderDTO();
 
             List<OrderDetail> orderDetailList = orderDetailRespository.findAllByOrderId(orderMaster.getOrderId());
@@ -287,7 +285,6 @@ public class OrderServiceImpl implements OrderService {
 
             result.add(orderDTO);
         }
-
 
 
         return result;

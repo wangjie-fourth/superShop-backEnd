@@ -10,16 +10,11 @@ import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by wangjie_fourth on 2019/4/25.
@@ -35,7 +30,7 @@ public class WechatController {
     private ShopUserService shopUserService;
 
     @GetMapping("/authorize")
-    public String authorize(@RequestParam("returnUrl")String returnUrl){
+    public String authorize(@RequestParam("returnUrl") String returnUrl) {
         //1、配置
         //2、调用方法\
         String url = "http://wangjie.natappvip.cc/supershop/wechat/userInfo";
@@ -48,13 +43,13 @@ public class WechatController {
     @GetMapping("/userInfo")
     public String userInfo(@RequestParam("code") String code,
                            @RequestParam("state") String returnUrl
-    )  {
+    ) {
         // 网页授权
         WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
         try {
             wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
         } catch (WxErrorException e) {
-            log.error("【微信网页授权】{}",e);
+            log.error("【微信网页授权】{}", e);
         }
         String openId = wxMpOAuth2AccessToken.getOpenId();
 
@@ -77,10 +72,10 @@ public class WechatController {
         // 如果没有注册过，就在表中添加数据；如果注册过，就什么都不做
         ShopUser user = shopUserService.save(shopUser);
 
-        log.info("{}",returnUrl +"#/goods/goodslist/0/" + openId);
+        log.info("{}", returnUrl + "#/goods/goodslist/0/" + openId);
 
         // 跳转到超市界面
-        return "redirect:" + returnUrl +"#/goods/goodslist/0/" + openId;
+        return "redirect:" + returnUrl + "#/goods/goodslist/0/" + openId;
     }
 
 }

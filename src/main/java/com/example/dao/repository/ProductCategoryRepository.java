@@ -14,15 +14,20 @@ import java.util.List;
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory, String> {
     // 查询所有商品类目
     List<ProductCategory> findAll();
+
     // 分页，获取商品分类
     Page<ProductCategory> findAll(Pageable pageable);
+
     // 添加或更新商品分类
     ProductCategory save(ProductCategory productCategory);
+
     // 查询所有上架的商品类目
     List<ProductCategory> findAllByCategoryExist(Integer categoryExist);
+
     // 查询 categoryType 的最大值
     @Query("select max(categoryType) from ProductCategory")
     Integer getMaxCategoryType();
+
     // 根据id，查询对应的对象
     ProductCategory findByCategoryId(String categoryId);
 

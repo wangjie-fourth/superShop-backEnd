@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by wangjie_fourth on 2019/4/27.
  */
-public interface OrderDetailRespository extends JpaRepository<OrderDetail,String> {
+public interface OrderDetailRespository extends JpaRepository<OrderDetail, String> {
 
     OrderDetail save(OrderDetail orderDetail);
 

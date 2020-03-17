@@ -8,13 +8,12 @@ import lombok.Getter;
  */
 @Getter
 public enum LocationSelectedStatusEnum {
-    SELECTED(1,"默认收货地址"),
-    UN_SELECTED(0,"不是默认收货地址")
-    ;
+    SELECTED(1, "默认收货地址"),
+    UN_SELECTED(0, "不是默认收货地址");
     private Integer code;
     private String message;
 
-    LocationSelectedStatusEnum(Integer code,String message){
+    LocationSelectedStatusEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
